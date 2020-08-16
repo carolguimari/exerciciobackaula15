@@ -18,3 +18,45 @@ const rl = readline.createInterface({
 /**
  * Escreva seu código aqui embaixo;
  */
+
+ let produtos = [
+  { nome: "cupcake",
+    preco: 1500,
+    quantidade: 30
+
+  },
+
+  { nome: "pão de queijo",
+    preco: 300,
+    quantidade: 100
+
+  },
+
+  { nome: "cafezinho",
+    preco: "500",
+    quantidade: 500
+
+  },
+
+  { nome: "broa de milho",
+    preco: 300,
+    quantidade: 100
+  }
+
+ ];
+
+ const chalk = require('chalk')
+
+ function perguntasClientes() {
+  rl.question("Qual produto você procura?", function resposta (resposta) {
+   for (i= 0; i <= produtos.length; i++) {
+     if (resposta === produtos[i].nome) {
+       console.log(`Yay! Temos seu produto ${chalk.blue(produtos[i].nome)}!`)
+     } else {
+       console.log(`Não temos o produto ${chalk.red(produtos[i].nome)}`)
+     }
+   }
+  })
+ }
+
+ perguntasClientes();
