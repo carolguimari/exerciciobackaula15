@@ -53,7 +53,8 @@ const rl = readline.createInterface({
     for (i= 0; i <= produtos.length; i++) {
      if (resposta === produtos[i].nome) {
        encontrado = true
-       console.log(`Yay! Temos seu produto ${chalk.blue(produtos[i].nome)}!`)
+       console.log(`Yay! Temos seu produto ${chalk.blue(resposta)}!`)
+       break;
      } 
    }
    if (!encontrado) {
