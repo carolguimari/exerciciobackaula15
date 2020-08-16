@@ -46,17 +46,48 @@ const rl = readline.createInterface({
  ];
 
  const chalk = require('chalk')
-
+ let emoji = require('node-emoji')
+ 
  function perguntasClientes() {
   rl.question("Qual produto você procura?", function resposta (resposta) {
     let encontrado = false
+    let produto = 0
     for (i= 0; i < produtos.length; i++) {
      if (resposta === produtos[i].nome) {
        encontrado = true
+       produto = i
        console.log(`Yay! Temos seu produto ${chalk.blue(resposta)}!`)
-       break;
-     } 
+        rl.question(`Qual a quantidade de ${chalk.blue(resposta)} deseja levar?`, function quantidade (quantidade) {
+        if (quantidade >= 1 && quantidade <= produtos[produto].quantidade) {
+            console.log(`Temos a quantidade disponível. O valor da compra é R$ ${chalk.green(produtos[produto].preco * quantidade /100)} reais`)
+            rl.question("Deseja pagar agora?", function compra (compra) {
+              if (compra === "Sim" || compra === "sim") {
+                console.log("Sua compra foi confirmada. Obrigado");
+                  rl.close();
+              } else {
+                console.log("Ok. Adicione o produto ao carrinho e conclua sua compra mais tarde.");
+                rl.close();
+              }
+              
+            })
+ 
+        } else {
+            rl.question(`A quantidade máxima deste produto no estoque é  ${produtos[produto].quantidade}. Ainda deseja levar?`, function confirma (confirma) {
+              if (confirma === "Sim" || confirma === "sim") {
+                console.log("Sua compra foi confirmada. Obrigado!");
+                  rl.close();
+              } else if (confirma === "Não" || confirma === "não") {
+                console.log("Que pena! Tente novamente em outra ocasião!");
+                rl.close();
+              }
+              
+          })
+         }
+      }) 
    }
+   
+  }
+   
    if (!encontrado) {
       console.log(`Não temos o produto ${chalk.red(resposta)}`)
       
@@ -70,10 +101,11 @@ const rl = readline.createInterface({
    })
    
   
-  
   }
 
+
 })
+
   
  }
 
