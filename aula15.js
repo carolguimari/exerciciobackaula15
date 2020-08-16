@@ -49,14 +49,19 @@ const rl = readline.createInterface({
 
  function perguntasClientes() {
   rl.question("Qual produto você procura?", function resposta (resposta) {
-   for (i= 0; i <= produtos.length; i++) {
+    let encontrado = false
+    for (i= 0; i <= produtos.length; i++) {
      if (resposta === produtos[i].nome) {
+       encontrado = true
        console.log(`Yay! Temos seu produto ${chalk.blue(produtos[i].nome)}!`)
-     } else {
-       console.log(`Não temos o produto ${chalk.red(produtos[i].nome)}`)
-     }
+     } 
    }
+   if (!encontrado) {
+      console.log(`Não temos o produto ${chalk.red(resposta)}`)
+   }
+   rl.close()
   })
+  
  }
 
  perguntasClientes();
