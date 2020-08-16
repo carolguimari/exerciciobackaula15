@@ -50,7 +50,7 @@ const rl = readline.createInterface({
  function perguntasClientes() {
   rl.question("Qual produto você procura?", function resposta (resposta) {
     let encontrado = false
-    for (i= 0; i <= produtos.length; i++) {
+    for (i= 0; i < produtos.length; i++) {
      if (resposta === produtos[i].nome) {
        encontrado = true
        console.log(`Yay! Temos seu produto ${chalk.blue(resposta)}!`)
@@ -59,9 +59,21 @@ const rl = readline.createInterface({
    }
    if (!encontrado) {
       console.log(`Não temos o produto ${chalk.red(resposta)}`)
-   }
-   rl.close()
-  })
+      
+      rl.question("Deseja procurar outro produto?", function outro (outro) {
+        if (outro === "Não" || outro === "não") {
+          console.log("Ok, tente novamente outro dia");
+          rl.close();
+        } else if (outro === "Sim" || outro === "sim") {
+          perguntasClientes(); 
+        }
+   })
+   
+  
+  
+  }
+
+})
   
  }
 
